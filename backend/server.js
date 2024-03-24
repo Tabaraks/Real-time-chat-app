@@ -1,9 +1,12 @@
 const express = require("express");
-const { chats } = require("./data/data");
+const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 const dotenv = require("dotenv");
 const app = express();
 const connectDb = require("./config/db");
 const colors = require("colors");
+const userRoutes = require("./routes/userRoutes");
+
+app.use(express.json());
 
 dotenv.config();
 
@@ -11,19 +14,11 @@ connectDb();
 
 const PORT = process.env.PORT || 5000;
 
-app.get("/", (req, res) => {
-  res.send("Api is running");
-});
+app.use("/api/user", userRoutes);
 
-app.get("/api/chat", (req, res) => {
-  res.send(chats);
-});
+app.use(notFound);
 
-app.get("/api/chat/:id", (req, res) => {
-  const { id } = req.params;
-  const singleChat = chats.find((c) => c._id === id);
-  res.send(singleChat);
-});
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`.yellow.bold);

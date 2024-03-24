@@ -8,6 +8,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
+
+import { useToast } from "@chakra-ui/react";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +20,54 @@ const Login = () => {
 
   const [show, setShow] = useState(false);
 
-  const submitHandler = () => {};
+  const history = useHistory();
+
+  const toast = useToast();
+
+  const submitHandler = () => {
+    if (!password || !email) {
+      toast({
+        title: "Please fill all the field",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      return;
+    }
+
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      const { data } = axios.post(
+        "/api/user/login",
+        { email, password },
+        config
+      );
+      toast({
+        title: "Login Successfull",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      history.push("/chats");
+    } catch (error) {
+      toast({
+        title: "Error Occured",
+        status: "error",
+        description: error.response.data.message,
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    }
+  };
 
   return (
     <VStack>
