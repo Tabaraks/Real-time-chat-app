@@ -10,8 +10,11 @@
   "author": "Tabarak",
   "license": "ISC",
   "dependencies": {
+    "colors": "^1.4.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.1",
-    "nodemon": "^3.1.0"
+    "mongoose": "^8.2.3",
+    "nodemon": "^3.1.0",
+    "react-router-dom": "^5.3.4"
   }
 }
