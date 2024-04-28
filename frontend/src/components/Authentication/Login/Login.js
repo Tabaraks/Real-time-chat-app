@@ -24,7 +24,7 @@ const Login = () => {
 
   const toast = useToast();
 
-  const submitHandler = () => {
+  const submitHandler = async () => {
     if (!password || !email) {
       toast({
         title: "Please fill all the field",
@@ -42,7 +42,7 @@ const Login = () => {
           "Content-type": "application/json",
         },
       };
-      const { data } = axios.post(
+      const { data } = await axios.post(
         "/api/user/login",
         { email, password },
         config
@@ -54,6 +54,8 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
+
+      console.log(data);
 
       localStorage.setItem("userInfo", JSON.stringify(data));
       history.push("/chats");
