@@ -16,7 +16,7 @@ const ChatPage = () => {
         display={"flex"}
         justifyContent={"space-between"}
         width={"100%"}
-        height={"95vh"}
+        height={"91vh"}
         padding={"10px"}
       >
         {user && <MyChats />}
