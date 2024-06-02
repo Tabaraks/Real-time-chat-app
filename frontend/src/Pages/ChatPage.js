@@ -9,6 +9,8 @@ import ChatBox from "../components/miscellaneous/ChatBox";
 const ChatPage = () => {
   const { user } = ChatState();
 
+  const [fetchChat, setFetchChat] = useState(false);
+
   return (
     <div style={{ width: "100%" }}>
       {user && <SideDrawer />}
@@ -19,8 +21,8 @@ const ChatPage = () => {
         height={"91vh"}
         padding={"10px"}
       >
-        {user && <MyChats />}
-        {user && <ChatBox />}
+        {user && <MyChats fetchChat={fetchChat} />}
+        {user && <ChatBox fetchChat={fetchChat} setFetchChat={setFetchChat} />}
       </Box>
     </div>
   );
